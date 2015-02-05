@@ -1,0 +1,10 @@
+{
+  "name": "PassAround",
+  "version": "0.0.0",
+  "description": "PassAround",
+  "main": "server.js",
+  "author": {
+    "name": "Michal Scienski",
+    "email": "mscienski@mscienski.com"
+  }
+}
