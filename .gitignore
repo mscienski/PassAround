@@ -44,7 +44,3 @@ Temporary Items
 
 #Project Specific Items
 .vagrant
-vendor
-composer.lock
-composer.phar
-.ntvs_analysis.dat
