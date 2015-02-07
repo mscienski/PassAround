@@ -13,10 +13,7 @@ module.exports = function ( grunt ) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-coffee');
-  grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-coffeelint');
   grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-ng-annotate');
@@ -24,7 +21,6 @@ module.exports = function ( grunt ) {
   grunt.loadNpmTasks('grunt-mkdir');
   grunt.loadNpmTasks('grunt-protractor-runner');
   grunt.loadNpmTasks('grunt-stripcomments');
-  grunt.loadNpmTasks('meta');
 
   /**
    * These tasks require git to work correctly. They are being retained in hopes of activation
@@ -37,7 +33,6 @@ module.exports = function ( grunt ) {
    * Load in our build configuration file.
    */
   var userConfig = require( './build.config.js' );
-  var metaConfig = require( './meta.config.js' );
 
   /**
    * This is the configuration object Grunt uses to give each plugin its 
@@ -340,26 +335,6 @@ module.exports = function ( grunt ) {
       }
     },
 
-    /**
-     * `grunt coffee` compiles the CoffeeScript sources. To work well with the
-     * rest of the build, we have a separate compilation task for sources and
-     * specs so they can go to different places. For example, we need the
-     * sources to live with the rest of the copied JavaScript so we can include
-     * it in the final build, but we don't want to include our specs there.
-     */
-    coffee: {
-      source: {
-        options: {
-          bare: true
-        },
-        expand: true,
-        cwd: '.',
-        src: [ '<%= app_files.coffee %>' ],
-        dest: '<%= build_dir %>',
-        ext: '.js'
-      }
-    },
-
     comments: {
       compile: {
         src: ['<%=concat.compile_app_js.dest%>']
@@ -515,24 +490,6 @@ module.exports = function ( grunt ) {
       }
     },
 
-    /**
-     * `coffeelint` does the same as `jshint`, but for CoffeeScript.
-     * CoffeeScript is not the default in ngBoilerplate, so we're just using
-     * the defaults here.
-     */
-    coffeelint: {
-      src: {
-        files: {
-          src: [ '<%= app_files.coffee %>' ]
-        }
-      },
-      test: {
-        files: {
-          src: [ '<%= app_files.coffeeunit %>' ]
-        }
-      }
-    },
-
     ngdocs: {
       options: {
         dest: '<%= docs_dir %>',
@@ -622,28 +579,6 @@ module.exports = function ( grunt ) {
       }
     },
 
-    meta: {
-      compile: {
-        dir: '<%= compile_dir %>/Code'
-      }
-    },
-
-    compress: {
-      compile: {
-        options: {
-          mode: 'zip',
-          archive: '<%=compile_dir%>/<%=metadata.solutionpackage.name || pkg.name %>.zip'
-        },
-        files: [
-          {
-            cwd: '<%= compile_dir %>/Code/',
-            src: ['**'],
-            expand: true
-          }
-        ]
-      }
-    },
-
     /**
      * This task compiles the karma template so that changes to its file array
      * don't have to be managed manually.
@@ -717,17 +652,6 @@ module.exports = function ( grunt ) {
       },
 
       /**
-       * When our CoffeeScript source files change, we want to run lint them and
-       * run our unit tests.
-       */
-      coffeesrc: {
-        files: [ 
-          '<%= app_files.coffee %>'
-        ],
-        tasks: [ 'coffeelint:src', 'coffee:source', 'karmaconfig','karma:continuous:run', 'copy:build_app_js' ]
-      },
-
-      /**
        * When assets are changed, copy them. Note that this will *not* copy new
        * files, so this is probably not very useful.
        */
@@ -771,25 +695,11 @@ module.exports = function ( grunt ) {
         options: {
           livereload: false
         }
-      },
-
-      /**
-       * When a CoffeeScript unit test file changes, we only want to lint it and
-       * run the unit tests. We don't want to do any live reloading.
-       */
-      coffeeunit: {
-        files: [
-          '<%= app_files.coffeeunit %>'
-        ],
-        tasks: [ 'coffeelint:test', 'karmaconfig', 'karma:continuous:run' ],
-        options: {
-          livereload: false
-        }
       }
     }
   };
 
-  grunt.initConfig( grunt.util._.extend( taskConfig, userConfig, metaConfig ) );
+  grunt.initConfig( grunt.util._.extend( taskConfig, userConfig ) );
   /**
    * In order to make it safe to just compile or copy *only* what was changed,
    * we need to ensure we are starting from a clean, fresh build. So we rename
@@ -814,7 +724,7 @@ module.exports = function ( grunt ) {
    * The `build` task gets your app ready to run for development and testing.
    */
   grunt.registerTask( 'build_no_test', [
-    'clean:all', 'mkdir','jshint', 'coffeelint', 'coffee', 'sass:build',
+    'clean:all', 'mkdir','jshint', 'sass:build',
     'copy:build_app_assets','copy:build_app_js',
     'copy:build_vendor_assets','copy:build_vendor_js','template:build'
   ]);
@@ -830,7 +740,7 @@ module.exports = function ( grunt ) {
    */
   grunt.registerTask( 'compile', [
     'clean:compile','copy:compile_assets', 'concat:compile_app_css', 'concat:compile_app_js', 'concat:compile_vendor_css', 'concat:compile_vendor_js', 'ngAnnotate',
-    'comments','cssmin', 'uglify', 'template:compile', 'clean:release', 'meta', 'compress'
+    'comments','cssmin', 'uglify', 'template:compile', 'clean:release'
   ]);
 
   /**

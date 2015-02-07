@@ -6,6 +6,7 @@ sudo cp /vagrant/000-default.conf /etc/apache2/sites-available/000-default.conf 
 sudo curl -s https://getcomposer.org/installer | php
 sudo php composer.phar install
 sudo apt-get install -y nodejs
+sudo apt-get install -y git
 sudo npm i -g grunt-cli karma karma-cli bower
 if ! [ -L /var/www ]; then
   sudo rm -rf /var/www

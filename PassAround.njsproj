@@ -30,9 +30,46 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="clientside\build.config.js" />
+    <Compile Include="clientside\Gruntfile.js" />
+    <Compile Include="clientside\karma\karma.conf.js" />
+    <Compile Include="clientside\meta.config.js" />
+    <Compile Include="clientside\protractor\protractor.conf.js" />
     <Compile Include="server.js" />
+    <Content Include=".gitattributes" />
+    <Content Include=".gitignore" />
+    <Content Include=".vagrant\machines\default\virtualbox\action_provision" />
+    <Content Include=".vagrant\machines\default\virtualbox\action_set_name" />
+    <Content Include=".vagrant\machines\default\virtualbox\id" />
+    <Content Include=".vagrant\machines\default\virtualbox\index_uuid" />
+    <Content Include=".vagrant\machines\default\virtualbox\private_key" />
+    <Content Include=".vagrant\machines\default\virtualbox\synced_folders" />
+    <Content Include="000-default.conf" />
+    <Content Include="bootstrap.sh" />
+    <Content Include="clientside\.bowerrc" />
+    <Content Include="clientside\bower.json" />
+    <Content Include="clientside\changelog.tpl" />
+    <Content Include="clientside\karma\junit.xsl" />
+    <Content Include="clientside\module.prefix" />
+    <Content Include="clientside\module.suffix" />
+    <Content Include="clientside\ne.bat" />
+    <Content Include="clientside\package.json" />
+    <Content Include="clientside\protractor\junit.xsl" />
+    <Content Include="index.php" />
+    <Content Include="composer.json" />
+    <Content Include="lampinstall.sh" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="Vagrantfile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".vagrant\" />
+    <Folder Include=".vagrant\machines\" />
+    <Folder Include=".vagrant\machines\default\" />
+    <Folder Include=".vagrant\machines\default\virtualbox\" />
+    <Folder Include="clientside\" />
+    <Folder Include="clientside\karma\" />
+    <Folder Include="clientside\protractor\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
