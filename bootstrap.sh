@@ -7,7 +7,8 @@ sudo curl -s https://getcomposer.org/installer | php
 sudo php composer.phar install
 sudo apt-get install -y nodejs
 sudo apt-get install -y git
-sudo npm i -g grunt-cli karma karma-cli bower
+sudo npm i -g bower nodemon gulp yo generator-hottowel
+sudo yo hottowel passaround
 if ! [ -L /var/www ]; then
   sudo rm -rf /var/www
   sudo ln -fs ~/passaround/ /var/www
