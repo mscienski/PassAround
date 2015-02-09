@@ -8,6 +8,8 @@
         'app.dashboard',
         'app.login',
         'app.register',
+        'app.proposal',
+        'app.submission',
         'app.layout'
     ]);
 

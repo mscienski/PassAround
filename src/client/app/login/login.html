@@ -1,43 +1,47 @@
-﻿<section>
-    <div class="error" ng-show="vm.loginError.isError">
-        <p>There was an error logging you in: </p>
-        <p>{{vm.loginError.message}}</p>
-        <p>Please try again.</p>
-    </div>
-    <div class="error" ng-show="vm.isReset">
-        <p>A password reset email has been sent.</p>
-    </div>
-    <div class="row">
-        <div class="col-lg-3 col-lg-offset-3">
-            <h1>Pass Around</h1>
-            <span class="super-large text-primary">
-                <i class="fa fa-repeat"></i>
-            </span>
-        </div>
-        <div class="col-lg-3">
+﻿<section class="mainbar">
+    <section class="matter">
+        <div class="container">
+            <div class="error" ng-show="vm.loginError.isError">
+                <p>There was an error logging you in: </p>
+                <p>{{vm.loginError.message}}</p>
+                <p>Please try again.</p>
+            </div>
+            <div class="error" ng-show="vm.isReset">
+                <p>A password reset email has been sent.</p>
+            </div>
             <div class="row">
-                <form name="loginForm" ng-submit="vm.login()">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" class="form-control" placeholder="Enter Email" ng-model="vm.email" required />
-                    </div>
+                <div class="col-lg-3 col-lg-offset-3">
+                    <h1>Pass Around</h1>
+                    <span class="super-large text-primary">
+                        <i class="fa fa-repeat"></i>
+                    </span>
+                </div>
+                <div class="col-lg-3">
+                    <div class="row">
+                        <form name="loginForm" ng-submit="vm.login()">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" class="form-control" placeholder="Enter Email" ng-model="vm.email" required />
+                            </div>
     
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" class="form-control" placeholder="Enter Password" ng-model="vm.password" required />
-                    </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" class="form-control" placeholder="Enter Password" ng-model="vm.password" required />
+                            </div>
 
-                    <div class="form-group">
-                        <button type="submit" class="btn" ng-class="{'btn-success': loginForm.$valid, 'btn-danger': loginForm.$invalid}" ng-disabled="loginForm.$invalid">Login</button>
+                            <div class="form-group">
+                                <button type="submit" class="btn" ng-class="{'btn-success': loginForm.$valid, 'btn-danger': loginForm.$invalid}" ng-disabled="loginForm.$invalid">Login</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </div>
-            <div class="row">
-                <small>Not a user? <a href="/register" class="text-primary">Register an account.</a></small>
-            </div>
-            <div class="row">
-                <small>Forgot your password? <a href="" class="text-primary" ng-click="vm.resetPassword()">Send a password reset email.</a></small>
+                    <div class="row">
+                        <small>Not a user? <a ui-sref="register" class="text-primary">Register an account.</a></small>
+                    </div>
+                    <div class="row">
+                        <small>Forgot your password? <a href="" class="text-primary" ng-click="vm.resetPassword()">Send a password reset email.</a></small>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 </section>

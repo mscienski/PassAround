@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.dashboard')
+        .module('app.submission')
         .run(appRun);
 
     appRun.$inject = ['routerHelper'];
@@ -14,16 +14,16 @@
     function getStates() {
         return [
             {
-                state: 'dashboard',
+                state: 'submission',
                 config: {
-                    url: '/',
-                    templateUrl: 'app/dashboard/dashboard.html',
-                    controller: 'DashboardController',
+                    url: '/submission',
+                    templateUrl: 'app/submission/submission.html',
+                    controller: 'SubmissionController',
                     controllerAs: 'vm',
-                    title: 'dashboard',
+                    title: 'submission',
                     settings: {
-                        nav: 2,
-                        content: '<i class="fa fa-dashboard"></i> Dashboard'
+                        nav: -1,
+                        content: '<i class="fa fa-share"></i> Submission'
                     },
                     resolve: {
                         'currentAuth': ['authservice', function (authservice) {

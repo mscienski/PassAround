@@ -1,44 +1,48 @@
-﻿<section>
-    <div class="error" ng-show="vm.registrationError.isError">
-        <p>There was an error with your registration. </p>
-        <p>{{vm.registrationError.message}}</p>
-        <p>Please try again.</p>
-    </div>
-    <div class="row">
-        <div class="col-lg-3 col-lg-offset-3">
-            <h1>Pass Around</h1>
-            <span class="super-large text-primary">
-                <i class="fa fa-repeat"></i>
-            </span>
-        </div>
-        <div class="col-lg-3">
+﻿<section class="mainbar">
+    <section class="matter">
+        <div class="container">
+            <div class="error" ng-show="vm.registrationError.isError">
+                <p>There was an error with your registration. </p>
+                <p>{{vm.registrationError.message}}</p>
+                <p>Please try again.</p>
+            </div>
             <div class="row">
-                <form name="registerForm" ng-submit="vm.register()">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" class="form-control" placeholder="Enter Email" ng-model="vm.email" required />
-                    </div>
+                <div class="col-lg-3 col-lg-offset-3">
+                    <h1>Pass Around</h1>
+                    <span class="super-large text-primary">
+                        <i class="fa fa-repeat"></i>
+                    </span>
+                </div>
+                <div class="col-lg-3">
+                    <div class="row">
+                        <form name="registerForm" ng-submit="vm.register()">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" class="form-control" placeholder="Enter Email" ng-model="vm.email" required />
+                            </div>
     
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" class="form-control" placeholder="Enter Password" ng-model="vm.password" required />
-                    </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" class="form-control" placeholder="Enter Password" ng-model="vm.password" required />
+                            </div>
 
-                    <password-strength-checker password="vm.password"></password-strength-checker>
+                            <password-strength-checker password="vm.password"></password-strength-checker>
 
-                    <div class="form-group">
-                        <label for="passwordrepeat">Repeat Password</label>
-                        <input type="password" id="passwordrepeat" class="form-control" placeholder="Repeat Password" ng-model="vm.passwordRepeat" required />
-                    </div>
+                            <div class="form-group">
+                                <label for="passwordrepeat">Repeat Password</label>
+                                <input type="password" id="passwordrepeat" class="form-control" placeholder="Repeat Password" ng-model="vm.passwordRepeat" required />
+                            </div>
 
-                    <div class="form-group">
-                        <button type="submit" class="btn" ng-class="{'btn-success': vm.password===vm.passwordRepeat, 'btn-danger': vm.password!==vm.passwordRepeat || registerForm.$invalid}" ng-disabled="vm.password!==vm.passwordRepeat || registerForm.$invalid">Register</button>
+                            <div class="form-group">
+                                <button type="submit" class="btn" ng-class="{'btn-success': vm.password===vm.passwordRepeat, 'btn-danger': vm.password!==vm.passwordRepeat || registerForm.$invalid}" ng-disabled="vm.password!==vm.passwordRepeat || registerForm.$invalid">Register</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </div>
-            <div class="row">
-                <small>Already have an account? <a href="/login" class="text-primary">Login.</a></small>
+                    <div class="row">
+                        <small>Already have an account? <a ui-sref="login" class="text-primary">Login.</a></small>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 </section>

@@ -50,11 +50,14 @@
             }).then(function (result) {
                 authUser = result;
                 var userSync = $firebase(fb.child('/Users'));
-                var userObject = userSync.$asArray();
-                return userObject.$add({
+                var userObject = userSync.$asObject();
+                return userObject.$loaded();
+            }).then(function(userObj) {
+                userObj[email.replace('.', ',')] = {
                     email: email,
-                    created: Date.now()
-                });
+                    created: Firebase.ServerValue.TIMESTAMP
+                };
+                return userObj.$save();
             }, function (error) {
                 defer.reject(error)
             }).then(function () {
