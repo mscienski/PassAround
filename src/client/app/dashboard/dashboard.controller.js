@@ -5,9 +5,9 @@
         .module('app.dashboard')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$q', 'dataservice', 'logger'];
+    DashboardController.$inject = ['currentAuth','$q', 'dataservice', 'logger'];
     /* @ngInject */
-    function DashboardController($q, dataservice, logger) {
+    function DashboardController(currentAuth, $q, dataservice, logger) {
         var vm = this;
         vm.news = {
             title: 'PassAround',
@@ -16,14 +16,14 @@
         vm.messageCount = 0;
         vm.people = [];
         vm.title = 'Dashboard';
+        vm.authData = null;
 
         activate();
 
         function activate() {
-            var promises = [getMessageCount(), getPeople()];
-            return $q.all(promises).then(function() {
-                logger.info('Activated Dashboard View');
-            });
+            getMessageCount();
+            getPeople();
+            vm.authData = !!currentAuth;
         }
 
         function getMessageCount() {

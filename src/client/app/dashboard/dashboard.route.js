@@ -22,8 +22,13 @@
                     controllerAs: 'vm',
                     title: 'dashboard',
                     settings: {
-                        nav: 1,
+                        nav: 3,
                         content: '<i class="fa fa-dashboard"></i> Dashboard'
+                    },
+                    resolve: {
+                        'currentAuth': ['authservice', function (authservice) {
+                            return authservice.requireAuth();
+                        }]
                     }
                 }
             }

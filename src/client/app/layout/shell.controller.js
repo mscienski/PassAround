@@ -1,34 +1,48 @@
 (function() {
-    'use strict';
 
     angular
         .module('app.layout')
         .controller('ShellController', ShellController);
 
-    ShellController.$inject = ['$timeout', 'config', 'logger'];
+    ShellController.$inject = ['$scope', 'config', 'logger', '$state', 'authservice'];
     /* @ngInject */
-    function ShellController($timeout, config, logger) {
+    function ShellController($scope, config, logger, $state, authservice) {
         var vm = this;
+        vm.logout = {
+            show: false,
+            logout: logout
+        }
+        vm.showSidebar = false;
         vm.busyMessage = 'Please wait ...';
         vm.isBusy = true;
-        vm.showSplash = true;
         vm.navline = {
             title: config.appTitle,
             text: 'Created by Michal Scienski',
+            user: ''
         };
 
         activate();
 
         function activate() {
-            logger.success(config.appTitle + ' loaded!', null);
-            hideSplash();
+            authservice.isAuth().then(function (result) {
+                if (result) {
+                    vm.navline.user = result.password.email;
+                    vm.logout.show = true;
+                    vm.showSidebar = true;
+                } else {
+                    vm.navline.user = '';
+                    vm.logout.show = false;
+                    vm.showSidebar = false;
+                }
+            });
         }
 
-        function hideSplash() {
-            //Force a 1 second delay so we can see the splash.
-            $timeout(function() {
-                vm.showSplash = false;
-            }, 1000);
+        function logout() {
+            authservice.logout().then(function (result) {
+                $state.go('login');
+            });
         }
+
+        $scope.$on('logEvent', activate);
     }
 })();
