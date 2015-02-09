@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.login')
+        .module('app.register')
         .run(appRun);
 
     appRun.$inject = ['routerHelper'];
@@ -14,28 +14,28 @@
     function getStates() {
         return [
             {
-                state: 'login',
+                state: 'register',
                 config: {
-                    url: '/login',
-                    templateUrl: 'app/login/login.html',
-                    controller: 'LoginController',
+                    url: '/register',
+                    templateUrl: 'app/register/register.html',
+                    controller: 'RegisterController',
                     controllerAs: 'vm',
-                    title: 'Login',
+                    title: 'Register',
                     settings: {
                         nav: -1,
-                        content: '<i class="fa fa-lock"></i> Login'
+                        content: '<i class="fa fa-lock"></i> Register'
                     },
                     resolve: {
                         'loggedIn': ['authservice', '$q', '$state', function (authservice, $q, $state) {
                             var defer = $q.defer();
 
-                            authservice.isAuth().then(function (res) {
-                                if (res) {
-                                    defer.resolve($state.go('dashboard'));
-                                } else {
-                                    defer.resolve();
-                                }
-                            });
+                                authservice.isAuth().then(function (res) {
+                                    if (res) {
+                                        defer.resolve($state.go('dashboard'));
+                                    } else {
+                                        defer.resolve();
+                                    }
+                                });
 
                             return defer.promise;
                         }]

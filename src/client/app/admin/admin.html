@@ -2,14 +2,57 @@
     <section class="matter">
         <div class="container">
             <div class="row">
-                <div class="widget wviolet">
-                    <div ht-widget-header title="{{vm.title}}"></div>
-                    <div class="widget-content user">
-                        <h3>TODO: Implement Your Features</h3>
-                    </div>
-                    <div class="widget-foot">
-                        <div class="clearfix"></div>
-                    </div>
+                <div class="success-message" ng-show="vm.changed">
+                    <span>Changes made successfully!</span>
+                </div>
+                <div class="error-message" ng-show="vm.errored">
+                    <span>There was an error during the operation!</span>
+                </div>
+            </div>
+            <div class="row">
+                <h2>Change My Password</h2>
+                <div class="col-lg-5">
+                    <form name="passwordResetForm" ng-submit="vm.changePassword()">
+                        <div class="form-group">
+                            <label for="oldPass">Old Password</label>
+                            <input type="password" id="oldPass" name="oldPass" class="form-control" placeholder="Old Password" ng-model="vm.oldPass" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="newPass">New Password</label>
+                            <input type="password" id="newPass" name="newPass" class="form-control" placeholder="New Password" ng-model="vm.newPass" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="newPassRepeat">Repeat New Password</label>
+                            <input type="password" id="newPassRepeat" name="newPass" class="form-control" placeholder="Repeat New Password" ng-model="vm.newPassRepeat" required />
+                        </div>
+
+                        <button type="submit" class="btn" ng-class="{'btn-primary': vm.newPass===vm.newPassRepeat && passwordResetForm.$valid, 'btn-danger': vm.newPass !== vm.newPassRepeat || passwordResetForm.$invalid}" ng-disabled="passwordResetForm.$invalid">Reset My Password</button>
+                    </form>
+                </div>
+                <div class="col-lg-2">
+                    <password-strength-checker password="vm.newPass"></password-strength-checker>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <h2>Delete My Account</h2>
+                <div class="col-lg-5">
+                    <form name="deleteForm" ng-submit="vm.deleteAccount()">
+                        <div class="form-group">
+                            <label for="deleteemail">Email</label>
+                            <input type="email" name="deleteemail" id="deleteemail" class="form-control" placeholder="Enter Email to Delete Account" ng-model="vm.deleteEmail" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="deletepassword">Password</label>
+                            <input type="password" name="deletepassword" id="deletepassword" class="form-control" placeholder="Enter Password to Delete Account" ng-model="vm.deletePassword" required />
+                        </div>
+                        <button type="submit" class="btn btn-danger" ng-disabled="deleteForm.$invalid">Delete My Accout</button>
+                        <p>
+                            <small class="text-danger">Warning: deleting your account is permanent.</small>
+                        </p>
+                    </form>
                 </div>
             </div>
         </div>

@@ -12,11 +12,14 @@
             login: login,
             logout: logout,
             requireAuth: requireAuth,
-            isAuth: isAuth
+            isAuth: isAuth,
+            register: register,
+            resetPassword: resetPassword,
+            changePassword: changePassword,
+            deleteAccount: deleteAccount
         };
 
         var fb = new Firebase('https://passaround.firebaseio.com/');
-        var $fb = $firebase(fb);
         var $auth = $firebaseAuth(fb);
 
         function login(email, password) {
@@ -36,6 +39,52 @@
 
         function isAuth() {
             return $q.when($auth.$getAuth());
+        }
+
+        function register(email, password) {
+            var defer = $q.defer();
+            var authUser = {};
+            $auth.$createUser({
+                email: email,
+                password: password
+            }).then(function (result) {
+                authUser = result;
+                var userSync = $firebase(fb.child('/Users'));
+                var userObject = userSync.$asArray();
+                return userObject.$add({
+                    email: email,
+                    created: Date.now()
+                });
+            }, function (error) {
+                defer.reject(error)
+            }).then(function () {
+                defer.resolve(authUser);
+            }, function (error) {
+                defer.reject(error)
+            });
+
+            return defer.promise;
+        }
+
+        function resetPassword(email) {
+            return $auth.$resetPassword({
+                email: email
+            });
+        }
+
+        function changePassword(email, oldPass, newPass) {
+            return $auth.$changePassword({
+                email: email,
+                oldPassword: oldPass,
+                newPassword: newPass
+            });
+        }
+
+        function deleteAccount(email, password) {
+            return $auth.$removeUser({
+                email: email,
+                password: password
+            });
         }
 
         return service;

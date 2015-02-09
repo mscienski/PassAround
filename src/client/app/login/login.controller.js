@@ -5,23 +5,21 @@
         .module('app.login')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$rootScope', '$q', '$state', 'authservice'];
+    LoginController.$inject = ['$scope', '$rootScope', '$timeout', '$q', '$state', 'authservice'];
     /* @ngInject */
-    function LoginController($rootScope, $q, $state, authservice) {
+    function LoginController($scope, $rootScope, $timeout, $q, $state, authservice) {
         var vm = this;
-        vm.news = {
-            title: 'PassAround',
-            description: 'Pass Around is a site for democratically created media content.'
-        };
-        vm.messageCount = 0;
-        vm.people = [];
         vm.title = 'Login';
         vm.email = '';
         vm.password = '';
-        vm.fb = {};
-        vm.sync = {};
+        vm.loginError = {
+            isError: false,
+            message: ''
+        };
+        vm.isReset = false;
 
         vm.login = login;
+        vm.resetPassword = resetPassword;
 
         activate();
 
@@ -35,9 +33,35 @@
                 $state.go('dashboard');
                 $rootScope.$broadcast('logEvent');
             }, function (errors) {
-                console.log(errors);
+                vm.loginError.isError = true;
+                vm.loginError.message = errors.message
                 $rootScope.$broadcast('logEvent');
             });
         }
+
+        function resetPassword() {
+            if (vm.email) {
+                authservice.resetPassword(vm.email).then(function () {
+                    vm.isReset = true;
+                });
+            }
+        }
+
+        $scope.$watch('vm.loginError.isError', function() {
+            if (vm.loginError) {
+                $timeout(function () {
+                    vm.loginError.isError = false;
+                    vm.loginError.message = '';
+                }, 3000);
+            }
+        });
+
+        $scope.$watch('vm.isReset', function () {
+            if (vm.isReset) {
+                $timeout(function () {
+                    vm.isReset = false;
+                }, 3000);
+            }
+        });
     }
 })();
